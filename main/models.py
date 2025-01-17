@@ -4,6 +4,7 @@ from django.urls import reverse
 
 class Category(models.Model):
     name = models.CharField(max_length=20,unique=True)
+    slug = models.SlugField(max_length=20, unique=True)
 
     class Meta:
         ordering = ["name"]
@@ -14,11 +15,12 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-    
+    2
 
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete = models.CASCADE)
     name = models.CharField(max_length=40)
+    slug = models.SlugField(max_length=200) #то что будет отображатся в поисковой строке 
     description = models.TextField(max_length=4000)
     price = models.DecimalField(default=0.00, decimal_places=2 ,max_digits=10 )
     variable = models.BooleanField(default=True)
@@ -28,6 +30,9 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("main", args=[self.slug])
 
 
 class CPU(models.Model):
@@ -41,7 +46,8 @@ class CPU(models.Model):
         return self.cpu_name
     
 class GPU(models.Model):
-    gpu_name = models.CharField(max_length=200)   
+    gpu_name = models.CharField(max_length=200) 
+    
     gpu_core = models.IntegerField(default=2)
     gpu_memory = models.IntegerField(default=2)
     gpu_frequency = models.DecimalField(default=0, decimal_places=2 ,max_digits=10)
@@ -67,7 +73,7 @@ class SSD(models.Model):
 
 
 
-class characteristics(models.Model):
+class Characteristics(models.Model):
     settings = models.ForeignKey(Category, on_delete = models.CASCADE)
     
     hz = models.DecimalField(decimal_places=2 ,max_digits=10)
