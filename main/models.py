@@ -17,22 +17,7 @@ class Category(models.Model):
 
     2
 
-class Product(models.Model):
-    category = models.ForeignKey(Category, on_delete = models.CASCADE)
-    name = models.CharField(max_length=40)
-    slug = models.SlugField(max_length=200) #то что будет отображатся в поисковой строке 
-    description = models.TextField(max_length=4000)
-    price = models.DecimalField(default=0.00, decimal_places=2 ,max_digits=10 )
-    variable = models.BooleanField(default=True)
-    created = models.DateTimeField(auto_created=True)
-    updated = models.DateTimeField(auto_created=True)
-    discount = models.DecimalField(default=0.00, decimal_places=2 ,max_digits=10 )
 
-    def __str__(self):
-        return self.name
-
-    def get_absolute_url(self):
-        return reverse("main", args=[self.slug])
 
 
 class CPU(models.Model):
@@ -74,7 +59,6 @@ class SSD(models.Model):
 
 
 class Characteristics(models.Model):
-    settings = models.ForeignKey(Category, on_delete = models.CASCADE)
     
     hz = models.DecimalField(decimal_places=2 ,max_digits=10)
     resolution = models.DecimalField(decimal_places=2 ,max_digits=10)
@@ -102,7 +86,23 @@ class Image:
     def get_deferred_url(self):
         return reverse("main:product_detail") 
 
+class Product(models.Model):
+    category = models.ForeignKey(Category, on_delete = models.CASCADE)
+    characteristics = models.ForeignKey(Characteristics, on_delete = models.CASCADE)
+    name = models.CharField(max_length=40)
+    slug = models.SlugField(max_length=200) #то что будет отображатся в поисковой строке 
+    description = models.TextField(max_length=4000)
+    price = models.DecimalField(default=0.00, decimal_places=2 ,max_digits=10 )
+    variable = models.BooleanField(default=True)
+    created = models.DateTimeField(auto_created=True)
+    updated = models.DateTimeField(auto_created=True)
+    discount = models.DecimalField(default=0.00, decimal_places=2 ,max_digits=10 )
 
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("main", args=[self.slug])
 
 #создать класс характеристик списком вниз все (ширина экрана герцовка компелктующие и тд)
 #найти или создать в фигме дизайн сайта (фронт) 

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category,Product,CPU,GPU,RAM,SSD,Characteristics,Image
+from .models import Category,Product,CPU,GPU,RAM,SSD,Characteristics
 
 
 @admin.register(Category)
@@ -9,17 +9,17 @@ class Categoryadmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class Productadmin(admin.ModelAdmin):
-    list_display = ["name", "slug", "category", "description", 
+    list_display = ["name", "slug", "description", 
                     "price", "variable","created",
                     "updated", "discount"]  
-    list_filter = ["variable", "created", "updated"] 
+    list_filter = ["variable", "created", "category", "characteristics", "updated"] 
     list_editable = ["price", "discount"]
     prepopulated_fields = {"slug": ("name",)}
 
 
 @admin.register(Characteristics)
 class Characteristics_admin(admin.ModelAdmin):
-    list_display = ["settings", "hz", "resolution", "weight", "cpu", "ram", "ssd", "gpu"]    
+    list_display = [ "hz", "resolution", "weight", "cpu", "ram", "ssd", "gpu"]    
 
 
 @admin.register(CPU)

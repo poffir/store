@@ -3,7 +3,7 @@ from .models import Product
 # Create your views here.
 
 def product_list(request):
-    products = Product.objects.filter(available = True)[:16]
+    products = Product.objects.filter()[:16]
     return render(request, "main/index.html",
                   {"products": products})
 
