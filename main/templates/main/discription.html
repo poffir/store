@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Page</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1c1c1c;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    header {
+      width: 100%;
+      padding: 10px;
+      background-color: #333;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 10px;
+    }
+
+    .header-nav {
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      background-color: #444;
+      color: #ffffff;
+      padding: 10px 15px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #555;
+    }
+
+    main {
+      margin-top: 30px;
+      max-width: 800px;
+    }
+
+    .product-carousel {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .carousel {
+      display: flex;
+      overflow: hidden;
+      width: 400px;
+      height: 300px;
+    }
+
+    .carousel-image {
+      min-width: 100%;
+      transition: opacity 0.5s ease-in-out;
+      opacity: 0;
+    }
+
+    .carousel-image.active {
+      opacity: 1;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .left {
+      left: -40px;
+    }
+
+    .right {
+      right: -40px;
+    }
+
+    .product-title {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    .product-description {
+      font-size: 1rem;
+      margin-top: 10px;
+    }
+
+    .cart-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #333;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      z-index: 100;
+      width: 300px;
+    }
+
+    .cart-modal.hidden {
+      display: none;
+    }
+
+    .cart-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-modal-header h2 {
+      margin: 0;
+    }
+
+    .close-button {
+      background-color: transparent;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .cart-items {
+      list-style: none;
+      margin: 10px 0;
+    }
+
+    .cart-items li {
+      padding: 5px 0;
+    }
+
+    .cart-items a {
+      color: #00bfff;
+      text-decoration: none;
+    }
+
+    .cart-items a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="header-nav">
+      <button class="home-button" onclick="goHome()">Домой</button>
+      <button class="cart-button" onclick="toggleCart()">Корзина</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="product-carousel">
+      <button class="carousel-btn left" onclick="prevSlide()">&#9664;</button>
+      <div class="carousel">
+        <img src="https://via.placeholder.com/400" alt="Product Image 1" class="carousel-image active">
+        <img src="https://via.placeholder.com/400" alt="Product Image 2" class="carousel-image">
+        <img src="https://via.placeholder.com/400" alt="Product Image 3" class="carousel-image">
+      </div>
+      <button class="carousel-btn right" onclick="nextSlide()">&#9654;</button>
+    </section>
+
+    <h1 class="product-title">Название товара</h1>
+    <p class="product-description">Описание товара с интересными деталями и характеристиками.</p>
+  </main>
+
+  <div class="cart-modal hidden" id="cartModal">
+    <div class="cart-modal-header">
+      <h2>Ваша корзина</h2>
+      <button class="close-button" onclick="toggleCart()">&times;</button>
+    </div>
+    <ul class="cart-items">
+      <li><a href="#">Товар 1</a></li>
+      <li><a href="#">Товар 2</a></li>
+    </ul>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-image');
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+    }
+
+    function prevSlide() {
+      currentSlide = (currentSlide > 0) ? currentSlide - 1 : slides.length - 1;
+      showSlide(currentSlide);
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide < slides.length - 1) ? currentSlide + 1 : 0;
+      showSlide(currentSlide);
+    }
+
+    function toggleCart() {
+      const cartModal = document.getElementById('cartModal');
+      cartModal.classList.toggle('hidden');
+    }
+  </script>
+</body>
+</html>

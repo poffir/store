@@ -61,7 +61,7 @@ class SSD(models.Model):
 class Characteristics(models.Model):
     
     hz = models.DecimalField(decimal_places=2 ,max_digits=10)
-    resolution = models.DecimalField(decimal_places=2 ,max_digits=10)
+    resolution = models.CharField(max_length=40)
     weight = models.DecimalField(default=0.00, decimal_places=2 ,max_digits=10)
 
     cpu = models.ForeignKey(CPU, on_delete = models.CASCADE) 
