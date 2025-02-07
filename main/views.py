@@ -9,3 +9,5 @@ def product_list(request):
 
 def product_detail(request, slug):
     pass
+
+
